@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Plant": {
+      "title": "Plant",
+      "description": "Information about a plant in the greenhouse.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "name": { "type": "string" },
+        "species": { "type": "string" },
+        "location": { "type": "string" },
+        "healthStatus": { "type": "string", "enum": ["Saludable", "Estable", "Necesita Atención"] },
+        "lastWatered": { "type": "string", "format": "date-time" },
+        "wateringFrequencyDays": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "ownerId", "name"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A care task for a plant.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "plantId": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "type": { "type": "string", "enum": ["Riego", "Rotación", "Fertilización"] },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "completed": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "plantId", "ownerId", "type", "dueDate"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/plants/{plantId}": {
+      "schema": "Plant",
+      "description": "Plant documents."
+    },
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Task documents."
+    }
+  }
+}
